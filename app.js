@@ -1,9 +1,10 @@
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 
 const isDev = process.env.NODE_ENV !== 'production';
 const isWindows = process.platform === 'win32';
 
+// Create main window
 const createMainWindow = () => {
   const mainWindow = new BrowserWindow({
     title: 'Image Resizer',
@@ -17,13 +18,42 @@ const createMainWindow = () => {
   mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
 }
 
+// Create About window
+const createAboutWindow = () => {
+  const aboutWindow = new BrowserWindow({
+    title: 'about Image Resizer',
+    width: 300,
+    height: 300
+  });
+
+  aboutWindow.loadFile(path.join(__dirname, './renderer/about.html'));
+}
+
+// App is Ready
 app.whenReady().then(() => {
   createMainWindow();
+
+  // Implement menu
+  const mainMenu = Menu.buildFromTemplate(menu);
+  Menu.setApplicationMenu(mainMenu);
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
   });
 });
+
+const menu = [
+  {
+    role: 'fileMenu'
+  },
+  ...(isWindows ? [{
+    label: 'Help',
+    submenu: [{
+      label: 'About',
+      click: createAboutWindow,
+    }],
+  }] : [])
+];
 
 app.on('window-all-closed', () => {
   if (isWindows) app.quit();
