@@ -1,0 +1,25 @@
+{
+  "name": "image-resizer-electron",
+  "productName": "Image Resizer",
+  "version": "1.0.0",
+  "description": "App to resize images",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/m11dedhia/image-resizer-electron.git"
+  },
+  "author": "Megh Dedhia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/m11dedhia/image-resizer-electron/issues"
+  },
+  "homepage": "https://github.com/m11dedhia/image-resizer-electron#readme",
+  "dependencies": {
+    "electron": "^23.1.4",
+    "resize-img": "^2.0.0",
+    "toastify-js": "^1.12.0"
+  }
+}
