@@ -1,5 +1,5 @@
 const path = require('path');
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 
 const isDev = process.env.NODE_ENV !== 'production';
 const isWindows = process.platform === 'win32';
@@ -9,7 +9,12 @@ const createMainWindow = () => {
   const mainWindow = new BrowserWindow({
     title: 'Image Resizer',
     width: isDev ? 1000 : 500,
-    height: 600
+    height: 600,
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: true,
+      preload: path.join(__dirname, "preload.js"),
+    }
   });
 
   // Open dev tools if in dev env
@@ -54,6 +59,8 @@ const menu = [
     }],
   }] : [])
 ];
+
+// respond to ipc renderer resize
 
 app.on('window-all-closed', () => {
   if (isWindows) app.quit();

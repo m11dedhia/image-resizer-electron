@@ -1,24 +1,79 @@
-// Some JavaScript to load the image and show the form. There is no actual backend functionality. This is just the UI
-
 const form = document.querySelector('#img-form');
+const img = document.querySelector('#img');
+const outputPath = document.querySelector('#output-path');
+const filename = document.querySelector('#filename');
+const heightInput = document.querySelector('#height');
+const widthInput = document.querySelector('#width');
 
-function loadImage(e) {
+const loadImage = (e) => {
   const file = e.target.files[0];
-
   if (!isFileImage(file)) {
-      alert('Please select an image file');
-        return;
+    alert('Please select an image!', false);
+    return;
+  }
+
+  // Get original Image dimensions
+  const image = new Image();
+  image.src = URL.createObjectURL(file);
+  image.onload = function() {
+    widthInput.value = this.width;
+    heightInput.value = this.height;
   }
 
   form.style.display = 'block';
-  document.querySelector(
-    '#filename'
-  ).innerHTML = file.name;
+  filename.innerText = file.name;
+  outputPath.innerText = path.join(os.homedir(), 'imageresizer');
 }
 
-function isFileImage(file) {
-    const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
-    return file && acceptedImageTypes.includes(file['type'])
+// send data to main process
+const sendImage = (e) => {
+  e.preventDefault();
+
+  const imgPath = img.file[0].path;
+  const width = widthInput.value;
+  const height = heightInput.value;
+
+  if (!img.files[0]) {
+    alert('Please upload an image', false);
+    return;
+  }
+
+  if (imgPath === '') {
+    alert('Please fill in the image path', false);
+    return;
+  }
+
+  if (width === '' || height === '') {
+    alert('Please fill in a height and width', false);
+    return;
+  }
+
+  // Send image to main using ipcRenderer
+  ipcRenderer.send('image:resize', {
+    imgPath,
+    width,
+    height,
+  })
 }
 
-document.querySelector('#img').addEventListener('change', loadImage);
+// check if file is an image
+const isFileImage = (file) => {
+  const acceptedImageTypes = ['image/gif', 'image/png', 'image/jpeg'];
+  return file && acceptedImageTypes.includes(file['type']);
+}
+
+const alert = (message, success) => {
+  Toastify.toast({
+    text: message,
+    duration: 5000,
+    close: false,
+    style: {
+      background: success ? 'green' : 'red',
+      color: 'white',
+      textAlign: 'center'
+    }
+  });
+}
+
+img.addEventListener('change', loadImage);
+form.addEventListener('submit', sendImage);
