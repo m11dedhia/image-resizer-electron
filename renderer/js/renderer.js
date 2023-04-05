@@ -29,7 +29,7 @@ const loadImage = (e) => {
 const sendImage = (e) => {
   e.preventDefault();
 
-  const imgPath = img.file[0].path;
+  const imgPath = img.files[0].path;
   const width = widthInput.value;
   const height = heightInput.value;
 
@@ -53,8 +53,13 @@ const sendImage = (e) => {
     imgPath,
     width,
     height,
-  })
+  });
 }
+
+// catch the image:done event
+ipcRenderer.on('image:done', () => {
+  alert(`Image has been resized to ${widthInput.value} x ${heightInput.value}`, true);
+});
 
 // check if file is an image
 const isFileImage = (file) => {
