@@ -2,7 +2,7 @@
 
 Image Resizer App is a desktop application built using Electron.js that allows users to resize images quickly and easily. With this app, users can select multiple images and resize them all at once to a desired dimension. This app is perfect for users who frequently work with images and need to resize them for various purposes.
 
-![Image Resizer App Screenshot](selection.jpeg)
+![Image Resizer App Screenshot](selection.png)
 
 ## Installation
 
@@ -20,7 +20,7 @@ Image Resizer App is a desktop application built using Electron.js that allows u
 5. Click on the "Resize Image" button to resize the selected image
 6. The resized image will be saved in a new folder and the folder will open up for you.
 
-![Image Resizer App Usage Screenshot](configure.jpeg)
+![Image Resizer App Usage Screenshot](configure.png)
 
 ## Contributing
 
