@@ -18,8 +18,11 @@
     "url": "https://github.com/m11dedhia/image-resizer-electron/issues"
   },
   "homepage": "https://github.com/m11dedhia/image-resizer-electron#readme",
-  "dependencies": {
+  "devDependencies": {
     "electron": "^23.1.4",
+    "electron-builder": "^23.6.0"
+  },
+  "dependencies": {
     "resize-img": "^2.0.0",
     "toastify-js": "^1.12.0"
   }
